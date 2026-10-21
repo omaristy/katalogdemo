@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#c2410c">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Katalog">
+<title>Katalog Produk</title>
+<link rel="preconnect" href="https://script.google.com"><link rel="preconnect" href="https://script.googleusercontent.com" crossorigin><link rel="preconnect" href="https://lh3.googleusercontent.com" crossorigin>
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--ink:#111827;--mut:#6b7280;--line:#e5e7eb;--br:#c2410c;--brt:var(--br);--soft:color-mix(in srgb,var(--br) 12%,var(--card));--g:linear-gradient(135deg,color-mix(in srgb,var(--br) 78%,#000),var(--br) 55%,color-mix(in srgb,var(--br) 82%,#fff));--sh:0 1px 3px #1118270f,0 4px 14px #1118270a}
+@media(prefers-color-scheme:dark){:root{--bg:#0f1115;--card:#181b21;--ink:#f3f4f6;--mut:#9ca3af;--line:#2a2f38;--brt:color-mix(in srgb,var(--br) 55%,#fff);--sh:none}}
+*{box-sizing:border-box}html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);padding-bottom:80px}
+button{font:inherit;cursor:pointer;touch-action:manipulation}
+input,textarea{font:inherit;font-size:16px;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 13px;width:100%}
+:focus-visible{outline:2px solid var(--br);outline-offset:2px}
+#inst{display:none;background:#111827;color:#fff;padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top));align-items:center;gap:10px;font-size:.88rem}
+#inst span{flex:1;line-height:1.35}
+#inst .go{background:var(--br);color:#fff;border:0;border-radius:8px;padding:8px 14px;font-weight:700}
+#inst .x{background:none;border:0;color:#fff9;font-size:1.3rem;padding:0 4px}
+header{background:radial-gradient(circle at 92% -20%,#ffffff33,transparent 55%),var(--g);color:#fff;padding:calc(22px + env(safe-area-inset-top)) 16px 58px}
+.hw{max-width:1100px;margin:auto}
+.hd{display:flex;align-items:center;gap:16px}.ht{min-width:0}
+#logo{width:clamp(78px,24vw,104px);height:clamp(78px,24vw,104px);border-radius:50%;object-fit:cover;border:4px solid var(--ring,#fff);background:var(--fill,#fff);flex:none;box-shadow:0 8px 24px #0004}
+#logo.noring{border:0}
+#logo.asli{width:auto;height:auto;max-height:clamp(60px,18vw,92px);max-width:min(38vw,230px);border:0;border-radius:0;background:none;box-shadow:none;object-fit:contain;filter:drop-shadow(0 4px 12px #0003)}
+#logo[hidden]{display:none}
+h1{margin:0;font-size:clamp(1.8rem,6.5vw,2.7rem);font-weight:800;letter-spacing:-.035em;line-height:1.08;text-shadow:0 2px 12px #0002}
+.sub{margin:8px 0 0;opacity:.92;font-size:.95rem}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.badges span{background:#ffffff26;border-radius:20px;padding:4px 12px;font-size:.78rem;font-weight:600}
+.sticky{position:sticky;top:0;z-index:5;background:var(--bg);margin:-34px auto 0;border-radius:22px 22px 0 0;padding:14px 16px 4px;max-width:1100px}
+.sbox{position:relative}.sbox svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;color:var(--mut)}
+#q{padding-left:42px;border-radius:12px;height:48px;box-shadow:var(--sh)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:12px 0 8px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:20px;padding:7px 16px;white-space:nowrap;font-weight:600;font-size:.88rem}
+.chip.on{background:var(--br);border-color:var(--br);color:#fff}
+.cnt{max-width:1100px;margin:auto;padding:6px 16px 0;color:var(--mut);font-size:.85rem}
+.grid{max-width:1100px;margin:auto;padding:10px 16px;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:640px){.grid{grid-template-columns:repeat(3,1fr);gap:16px}}@media(min-width:960px){.grid{grid-template-columns:repeat(4,1fr)}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--sh)}
+.card.inc{border-color:var(--br)}
+.ph{position:relative;aspect-ratio:1;background:var(--line)}.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.tag{position:absolute;left:8px;top:8px;background:#ffffffe6;color:#111827;font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:12px;backdrop-filter:blur(4px)}
+.info{padding:11px 12px 12px;display:flex;flex-direction:column;gap:4px;flex:1}
+.nm{font-weight:650;font-size:.93rem;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ds{font-size:.78rem;color:var(--mut);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pr{font-weight:800;font-size:1.08rem;color:var(--brt);margin-top:2px}.pr small{font-weight:500;color:var(--mut);font-size:.75rem}
+.prw{display:flex;flex-wrap:wrap;align-items:center;gap:2px 7px;margin-top:2px}
+.old{color:var(--mut);font-size:.8rem;text-decoration:line-through}
+.pill{background:#16a34a;color:#fff;font-size:.66rem;font-weight:800;padding:2px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:.03em}
+.act{margin-top:auto;padding-top:8px}
+.add{width:100%;border:1.5px solid var(--br);background:var(--soft);color:var(--brt);border-radius:10px;padding:9px;font-weight:700}
+.step{display:flex;align-items:stretch;border:1.5px solid var(--br);border-radius:10px;overflow:hidden}
+.step button{width:42px;border:0;background:var(--br);color:#fff;font-size:1.25rem;font-weight:700}
+.step input{border:0;border-radius:0;text-align:center;padding:8px 0;min-width:0;font-weight:700}
+.sk{aspect-ratio:.72;border-radius:14px;background:linear-gradient(90deg,var(--line) 25%,var(--card) 50%,var(--line) 75%);background-size:200% 100%;animation:sh 1.2s infinite}@keyframes sh{to{background-position:-200% 0}}
+.msg{text-align:center;color:var(--mut);padding:48px 16px;grid-column:1/-1}
+.bar{position:fixed;left:0;right:0;bottom:0;padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:none;justify-content:center;z-index:6}
+.bar button{width:100%;max-width:560px;background:var(--br);color:#fff;border:0;border-radius:14px;padding:13px 18px;display:flex;justify-content:space-between;align-items:center;font-weight:700;box-shadow:0 10px 28px color-mix(in srgb,var(--br) 40%,transparent)}
+.bar b{background:#fff3;border-radius:20px;padding:2px 10px;margin-right:8px}
+.modal{position:fixed;inset:0;background:#0b0f1a99;display:none;align-items:flex-end;justify-content:center;z-index:9}
+.sheet{background:var(--card);width:100%;max-width:560px;max-height:92vh;overflow:auto;border-radius:22px 22px 0 0;padding:20px 18px calc(18px + env(safe-area-inset-bottom))}
+.sheet h2{margin:0 0 8px;font-size:1.25rem;font-weight:800}
+.crow{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.crow img{width:52px;height:52px;border-radius:10px;object-fit:cover;background:var(--line);flex:none}
+.crow .t{flex:1;min-width:0;font-size:.9rem}.crow .t b{display:block}.crow .t span{color:var(--mut);font-size:.8rem}
+.crow .step{flex:none}.crow .step button{width:32px;font-size:1.1rem}.crow .step input{width:38px}
+.tot{display:flex;justify-content:space-between;font-weight:800;font-size:1.15rem;padding:14px 0}
+.tot span:last-child{color:var(--brt)}
+.sheet label{display:block;margin:10px 0 4px;font-size:.82rem;font-weight:600;color:var(--mut)}
+.btn{background:#16a34a;color:#fff;border:0;border-radius:12px;padding:14px;font-weight:700;width:100%;margin-top:14px}
+.ghost{background:none;border:0;color:var(--mut);width:100%;padding:10px;margin-top:4px}
+.card .ph,.card .nm,.card .ds{cursor:pointer}
+#dm{align-items:flex-end}#dbox{position:relative;padding:0;max-width:560px}
+@media(min-width:700px){#dm{align-items:center}#dbox{border-radius:22px}}
+.dimg{width:100%;aspect-ratio:1;max-height:56vh;object-fit:cover;display:block;background:var(--line);cursor:zoom-in}
+.gwrap{position:relative}
+.gal{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}.gal::-webkit-scrollbar{display:none}
+.gal .dimg{flex:0 0 100%;min-width:100%;scroll-snap-align:center;scroll-snap-stop:always}
+.gn{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;border:0;background:#000a;color:#fff;font-size:1.4rem;line-height:1;display:none;z-index:2}.gn.l{left:10px}.gn.r{right:10px}
+@media(hover:hover){.gn{display:block}}
+.dots{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:6px;pointer-events:none}.dots i{width:8px;height:8px;border-radius:50%;background:#fff8;box-shadow:0 0 3px #0006}.dots i.on{background:#fff;width:20px;border-radius:6px}
+.cn{position:absolute;right:8px;bottom:8px;background:#ffffffe6;color:#111827;font-weight:700;font-size:.68rem;padding:3px 9px;border-radius:12px}
+.dimg.full{object-fit:contain;background:#000;cursor:zoom-out}
+.dx{position:absolute;right:12px;top:12px;width:40px;height:40px;border-radius:50%;border:0;background:#000b;color:#fff;font-size:1.4rem;z-index:2}
+.dbody{padding:16px 18px calc(22px + env(safe-area-inset-bottom))}
+.dtag{display:inline-block;background:var(--soft);color:var(--brt);font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:12px}
+.dbody h2{margin:8px 0 4px;font-size:1.35rem;font-weight:800;line-height:1.25}
+.prw.big .pr{font-size:1.5rem}.prw.big .old{font-size:.95rem}
+.ddesc{white-space:pre-line;overflow-wrap:anywhere;line-height:1.65;font-size:.95rem;margin:12px 0 16px}
+.step.big{height:48px}.step.big button{width:52px;font-size:1.4rem}.add.big{padding:14px;font-size:1rem}
+.dsub{color:var(--mut);font-size:.85rem;margin-top:8px;text-align:right}
+.dhint{color:var(--mut);font-size:.72rem;margin-top:4px}
+.soldout .ph img{filter:grayscale(1);opacity:.55}
+.sold{position:absolute;inset:0;display:grid;place-items:center}.sold span{background:#111827e6;color:#fff;font-weight:800;padding:6px 16px;border-radius:20px;font-size:.85rem}
+.stk{font-size:.74rem;font-weight:700;color:#b45309}
+.add:disabled,.step button:disabled{opacity:.45;cursor:not-allowed}
+#toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:24px;font-size:.88rem;z-index:20;display:none;max-width:90%;text-align:center}
+.ket{font-size:.74rem;font-weight:700;color:var(--brt);background:var(--soft);border-radius:8px;padding:3px 9px;width:fit-content;max-width:100%;overflow-wrap:anywhere}
+.steps{margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #ffffff3d;background:#ffffff1f;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-radius:16px;overflow:hidden}
+.steps>div{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:12px 6px;text-align:center;font-size:.72rem;font-weight:600;line-height:1.3;letter-spacing:.015em}
+.steps>div+div{border-left:1px solid #ffffff33}
+.steps svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;opacity:.95}
+@media(min-width:640px){.steps{width:fit-content}.steps>div{flex-direction:row;gap:10px;padding:11px 22px;font-size:.84rem}}
+.jam{margin-top:8px}
+.jam>button{background:none;color:#fff;border:0;padding:2px 0;font-size:.85rem;font-weight:500;opacity:.95;display:inline-flex;gap:8px;align-items:center;text-align:left}.jam>button b{font-size:.7rem;opacity:.8}
+.dot{width:9px;height:9px;border-radius:50%;background:#4ade80;flex:none;box-shadow:0 0 0 3px #4ade8055}.dot.off{background:#f87171;box-shadow:0 0 0 3px #f8717155}
+#jamd{margin-top:8px;background:var(--card);color:var(--ink);border-radius:14px;padding:10px 14px;width:min(260px,100%);font-size:.82rem;box-shadow:0 10px 30px #0003}
+.jr{display:flex;justify-content:space-between;gap:18px;padding:2px 0}.jr.now{font-weight:800}
+.cl{background:var(--soft);color:var(--brt);border-radius:10px;padding:10px 12px;font-size:.84rem;font-weight:600;margin-top:12px}
+footer{text-align:center;color:var(--mut);font-size:.8rem;padding:26px 16px calc(22px + env(safe-area-inset-bottom))}
+</style>
+<script>const THEMES=[{"id":"oranye","n":"Oranye","br":"#c2410c"},{"id":"merah","n":"Merah","br":"#dc2626"},{"id":"pink","n":"Pink","br":"#db2777"},{"id":"fuchsia","n":"Fuchsia","br":"#a21caf"},{"id":"ungu","n":"Ungu","br":"#7c3aed"},{"id":"indigo","n":"Indigo","br":"#4f46e5"},{"id":"biru","n":"Biru","br":"#2563eb"},{"id":"toska","n":"Toska","br":"#0f766e"},{"id":"hijau","n":"Hijau","br":"#15803d"},{"id":"emas","n":"Emas","br":"#a16207"},{"id":"w01","n":"Merah Cerah","br":"#e4130c"},{"id":"w02","n":"Koral Cerah","br":"#da350b"},{"id":"w03","n":"Jingga Cerah","br":"#c74f0a"},{"id":"w04","n":"Ambar Cerah","br":"#a56609"},{"id":"w05","n":"Emas Tua Cerah","br":"#916d08"},{"id":"w06","n":"Zaitun Cerah","br":"#757906"},{"id":"w07","n":"Lime Tua Cerah","br":"#458307"},{"id":"w08","n":"Hijau Daun Cerah","br":"#128807"},{"id":"w09","n":"Hijau Cerah","br":"#078330"},{"id":"w10","n":"Zamrud Cerah","br":"#07835a"},{"id":"w11","n":"Toska Cerah","br":"#07837f"},{"id":"w12","n":"Laut Cerah","br":"#097ea5"},{"id":"w13","n":"Langit Cerah","br":"#0b74d0"},{"id":"w14","n":"Biru Cerah","br":"#1659f3"},{"id":"w15","n":"Nila Cerah","br":"#1616f3"},{"id":"w16","n":"Ungu Cerah","br":"#7d16f3"},{"id":"w17","n":"Anggrek Cerah","br":"#c90bda"},{"id":"w18","n":"Mawar Cerah","br":"#e40c66"},{"id":"w19","n":"Merah Segar","br":"#bf2722"},{"id":"w20","n":"Koral Segar","br":"#bf4122"},{"id":"w21","n":"Jingga Segar","br":"#ba5921"},{"id":"w22","n":"Ambar Segar","br":"#9c691c"},{"id":"w23","n":"Emas Tua Segar","br":"#8f7019"},{"id":"w24","n":"Zaitun Segar","br":"#767915"},{"id":"w25","n":"Lime Tua Segar","br":"#4c8217"},{"id":"w26","n":"Hijau Daun Segar","br":"#218618"},{"id":"w27","n":"Hijau Segar","br":"#18863d"},{"id":"w28","n":"Zamrud Segar","br":"#17825e"},{"id":"w29","n":"Toska Segar","br":"#17827e"},{"id":"w30","n":"Laut Segar","br":"#1c7c9c"},{"id":"w31","n":"Langit Segar","br":"#2275bf"},{"id":"w32","n":"Biru Segar","br":"#2251bf"},{"id":"w33","n":"Nila Segar","br":"#2222bf"},{"id":"w34","n":"Ungu Segar","br":"#6b22bf"},{"id":"w35","n":"Anggrek Segar","br":"#b222bf"},{"id":"w36","n":"Mawar Segar","br":"#bf2263"},{"id":"w37","n":"Merah Lembut","br":"#9b3e3b"},{"id":"w38","n":"Koral Lembut","br":"#9b4e3b"},{"id":"w39","n":"Jingga Lembut","br":"#9b5e3b"},{"id":"w40","n":"Ambar Lembut","br":"#906c37"},{"id":"w41","n":"Emas Tua Lembut","br":"#897234"},{"id":"w42","n":"Zaitun Lembut","br":"#74762d"},{"id":"w43","n":"Lime Tua Lembut","br":"#577e30"},{"id":"w44","n":"Hijau Daun Lembut","br":"#388131"},{"id":"w45","n":"Hijau Lembut","br":"#31814c"},{"id":"w46","n":"Zamrud Lembut","br":"#318167"},{"id":"w47","n":"Toska Lembut","br":"#307e7b"},{"id":"w48","n":"Laut Lembut","br":"#387d94"},{"id":"w49","n":"Langit Lembut","br":"#3b6e9b"},{"id":"w50","n":"Biru Lembut","br":"#3b589b"},{"id":"w51","n":"Nila Lembut","br":"#3b3b9b"},{"id":"w52","n":"Ungu Lembut","br":"#683b9b"},{"id":"w53","n":"Anggrek Lembut","br":"#933b9b"},{"id":"w54","n":"Mawar Lembut","br":"#9b3b63"},{"id":"w55","n":"Merah Pekat","br":"#97110c"},{"id":"w56","n":"Koral Pekat","br":"#97280c"},{"id":"w57","n":"Jingga Pekat","br":"#973f0c"},{"id":"w58","n":"Ambar Pekat","br":"#975f0c"},{"id":"w59","n":"Emas Tua Pekat","br":"#926e0c"},{"id":"w60","n":"Zaitun Pekat","br":"#72760a"},{"id":"w61","n":"Lime Tua Pekat","br":"#457f0a"},{"id":"w62","n":"Hijau Daun Pekat","br":"#15840b"},{"id":"w63","n":"Hijau Pekat","br":"#0b8433"},{"id":"w64","n":"Zamrud Pekat","br":"#0b845c"},{"id":"w65","n":"Toska Pekat","br":"#0a7f7b"},{"id":"w66","n":"Laut Pekat","br":"#0c7497"},{"id":"w67","n":"Langit Pekat","br":"#0c5697"},{"id":"w68","n":"Biru Pekat","br":"#0c3697"},{"id":"w69","n":"Nila Pekat","br":"#0c0c97"},{"id":"w70","n":"Ungu Pekat","br":"#4d0c97"},{"id":"w71","n":"Anggrek Pekat","br":"#8b0c97"},{"id":"w72","n":"Mawar Pekat","br":"#970c46"},{"id":"w73","n":"Merah Gelap","br":"#5a1916"},{"id":"w74","n":"Koral Gelap","br":"#5a2416"},{"id":"w75","n":"Jingga Gelap","br":"#5a2f16"},{"id":"w76","n":"Ambar Gelap","br":"#5a3f16"},{"id":"w77","n":"Emas Tua Gelap","br":"#5a4816"},{"id":"w78","n":"Zaitun Gelap","br":"#585a16"},{"id":"w79","n":"Lime Tua Gelap","br":"#385a16"},{"id":"w80","n":"Hijau Daun Gelap","br":"#1c5a16"},{"id":"w81","n":"Hijau Gelap","br":"#165a2d"},{"id":"w82","n":"Zamrud Gelap","br":"#165a43"},{"id":"w83","n":"Toska Gelap","br":"#165a58"},{"id":"w84","n":"Laut Gelap","br":"#16495a"},{"id":"w85","n":"Langit Gelap","br":"#163a5a"},{"id":"w86","n":"Biru Gelap","br":"#162b5a"},{"id":"w87","n":"Nila Gelap","br":"#16165a"},{"id":"w88","n":"Ungu Gelap","br":"#36165a"},{"id":"w89","n":"Anggrek Gelap","br":"#54165a"},{"id":"w90","n":"Mawar Gelap","br":"#5a1632"}];
+function applyTheme(id){let t=THEMES.find(x=>x.id===id);if(!t&&/^c[0-9a-f]{6}$/.test(id||''))t={id:id,br:'#'+id.slice(1)};t=t||THEMES[0];document.documentElement.style.setProperty('--br',t.br);const m=document.querySelector('meta[name=theme-color]');if(m)m.content=t.br;try{localStorage.setItem('kat_tema',t.id)}catch(e){}}
+try{applyTheme(localStorage.getItem('kat_tema'))}catch(e){}
+</script>
+<script>
+// ====== URL Web App Google Apps Script ======
+const API = "https://script.google.com/macros/s/AKfycbywwZHfBpS59xKDO_TIRjwKNhcyCSI07le15Y3p0QRnrNNmPRXkIdLQAwG_gT5umKS-HA/exec";
+// Mulai ambil data SEKARANG (tidak menunggu halaman selesai dimuat), dengan batas waktu & ulang otomatis
+async function getData(tries = 3) {
+  for (let i = 0; i < tries; i++) {
+    const c = new AbortController(), t = setTimeout(() => c.abort(), i ? 15000 : 10000);
+    try { const r = await fetch(API, { signal: c.signal }); const d = await r.json(); clearTimeout(t); if (d && d.ok) return d; } catch (e) { clearTimeout(t); }
+    await new Promise(r => setTimeout(r, 700 * (i + 1)));
+  }
+  throw new Error("gagal");
+}
+window.__d = getData().catch(() => null);
+</script>
+</head>
+<body>
+<div id="inst"><span id="itxt"></span><button class="go" id="igo">Pasang</button><button class="x" id="ix" aria-label="Tutup">×</button></div>
+<header><div class="hw"><div class="hd"><img id="logo" alt="Logo" hidden><div class="ht"><h1 id="store">Katalog</h1><div class="jam" id="jam" hidden><button id="jamb" aria-expanded="false"><i class="dot" id="jdot"></i><span id="jams"></span><b>▾</b></button><div id="jamd" hidden></div></div></div></div><div class="steps"><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg><span>Pilih produk</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg><span>Tentukan jumlah</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.7 7L4 20l1.1-4.2A8 8 0 1 1 21 12z"/></svg><span>Pesan &amp; konfirmasi via WhatsApp</span></div></div></div></header>
+<div class="sticky"><div class="sbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="q" type="search" placeholder="Cari produk…" aria-label="Cari produk"></div><div class="chips" id="chips"></div></div>
+<div class="cnt" id="cnt"></div>
+<main class="grid" id="grid"><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div></main>
+<footer>© 2026 Omaris. All Rights Reserved.</footer>
+<div class="bar" id="bar"><button id="open"><span><b id="bn"></b>Lihat keranjang</span><span id="bt"></span></button></div>
+
+<div class="modal" id="modal"><div class="sheet">
+<h2>Keranjang</h2><div id="items"></div><div class="tot"><span>Total</span><span id="total"></span></div>
+<label for="nm">Nama Anda</label><input id="nm" placeholder="Nama pemesan">
+<label for="note">Catatan / alamat (opsional)</label><textarea id="note" rows="2"></textarea>
+<div class="cl" id="clnote" hidden>Toko sedang tutup. Pesanan tetap bisa dikirim dan akan dibalas saat toko buka.</div>
+<button class="btn" id="send">Kirim pesanan via WhatsApp</button>
+<button class="ghost" id="close">Lanjut memilih</button>
+</div></div>
+
+<div class="modal" id="dm"><div class="sheet" id="dbox"></div></div>
+
+<div id="toast"></div>
+<script>
+const rp = n => "Rp" + Number(n).toLocaleString("id-ID");
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const promo = p => p.harga_diskon > 0 && p.harga_diskon < p.harga;
+const hp = p => promo(p) ? p.harga_diskon : p.harga;
+const mxq = p => p.stok == null ? Infinity : p.stok;   // batas jumlah = stok (kosong = tak terbatas)
+let tt; const toast = m => { const t = $("toast"); t.textContent = m; t.style.display = "block"; clearTimeout(tt); tt = setTimeout(() => t.style.display = "none", 2200); };
+const $ = id => document.getElementById(id);
+let products = [], cart = {}, cat = "Semua", wa = "", store = "";
+
+const first = u => String(u || "").split("|")[0].trim();                       // foto utama = link pertama
+const pics = p => String(p.gambar || "").split("|").map(s => s.trim()).filter(Boolean);   // semua foto produk
+const gid = u => { const m = first(u).match(/\/d\/([\w-]+)/) || first(u).match(/[?&]id=([\w-]+)/); return m ? m[1] : ""; };
+const img = (u, w = 360) => gid(u) ? `https://lh3.googleusercontent.com/d/${gid(u)}=w${w}` : first(u);
+// jika jalur cepat gagal, coba jalur thumbnail Drive; jika gagal lagi, sembunyikan
+function fb(el) {
+  if (el.dataset.id && !el.dataset.t) { el.dataset.t = 1; el.src = `https://drive.google.com/thumbnail?id=${el.dataset.id}&sz=w${el.dataset.w || 360}`; }
+  else el.style.visibility = "hidden";
+}
+const CK = "kat_cache_v1";
+const RING = { putih: "#ffffff", hitam: "#111827", merah: "#dc2626", kuning: "#facc15", biru: "#2563eb", oranye: "#f97316", hijau: "#16a34a", ungu: "#7c3aed", pink: "#ec4899", tanpa: "transparent" };
+function apply(d) {
+  products = d.products; wa = d.wa; store = d.store; applyTheme(d.tema); jamCfg = { jam: d.jam || "", zona: d.zona || "Asia/Jakarta", tutup: d.tutup || "" };
+  Object.keys(cart).forEach(k => { const q = products.find(x => String(x.id) === k); if (!q || q.stok === 0) delete cart[k]; else if (q.stok != null && cart[k] > q.stok) cart[k] = q.stok; });
+  $("store").textContent = store; document.title = store;
+  if (d.logo) {   // logo diambil dalam bentuk asli (agar PNG transparan tidak berlatar hitam/putih)
+    const L = $("logo"), id = gid(d.logo), asli = d.logobentuk === "asli";
+    L.className = asli ? "asli" : (d.logowarna === "tanpa" ? "noring" : "");
+    L.style.setProperty("--ring", RING[d.logowarna] || "#ffffff");
+    L.style.setProperty("--fill", RING[d.logoisi] || "#ffffff");
+    L.onerror = () => { if (id && !L.dataset.t) { L.dataset.t = 1; L.src = `https://drive.google.com/uc?export=view&id=${id}`; } else L.style.visibility = "hidden"; };
+    const src = id ? `https://lh3.googleusercontent.com/d/${id}` : first(d.logo);
+    if (L.getAttribute("src") !== src) { L.dataset.t = ""; L.style.visibility = ""; L.src = src; }
+    L.hidden = false;
+  }
+  render(); bar(); renderJam();
+}
+let lastLoad = 0;
+const SKELETON = '<div class="sk"></div>'.repeat(4);
+async function load(force) {
+  let had = false;
+  if (!force) { try { const c = JSON.parse(localStorage.getItem(CK)); if (c && c.products) { apply(c); had = true; } } catch {} }   // tampil instan dari simpanan HP
+  const d = await (force ? getData().catch(() => null) : window.__d);
+  if (d) {
+    lastLoad = Date.now();
+    const s = JSON.stringify(d); let old = ""; try { old = localStorage.getItem(CK); localStorage.setItem(CK, s); } catch {}
+    if (s !== old || !products.length) apply(d);                                   // hanya gambar ulang jika ada perubahan
+  } else if (!had && !products.length) {
+    $("grid").innerHTML = '<div class="msg">Gagal memuat katalog.<br>Periksa koneksi internet Anda.<br><button class="add" id="rt" style="width:auto;margin-top:12px;padding:9px 20px">Coba lagi</button></div>';
+  } else toast("Menampilkan data tersimpan. Periksa koneksi internet.");
+}
+const qh = p => p.stok === 0 ? `<button class="add" disabled>Stok habis</button>` : cart[p.id]
+  ? `<div class="step"><button data-m="${esc(p.id)}" aria-label="Kurangi">−</button><input data-i="${esc(p.id)}" inputmode="numeric" value="${cart[p.id]}" aria-label="Jumlah ${esc(p.nama)}"><button data-p="${esc(p.id)}" ${cart[p.id] >= mxq(p) ? "disabled" : ""} aria-label="Tambah">+</button></div>`
+  : `<button class="add" data-p="${esc(p.id)}">+ Tambah</button>`;
+
+function render() {
+  const cats = ["Semua", ...new Set(products.map(p => p.kategori).filter(Boolean))];
+  $("chips").innerHTML = cats.length > 2 ? cats.map(c => `<button class="chip ${c===cat?"on":""}" data-c="${esc(c)}">${esc(c)}</button>`).join("") : "";
+  const k = $("q").value.toLowerCase();
+  const list = products.filter(p => (cat === "Semua" || p.kategori === cat) && (p.nama + " " + p.deskripsi).toLowerCase().includes(k));
+  $("cnt").textContent = list.length ? `${list.length} produk` : "";
+  $("grid").innerHTML = list.length ? list.map((p, i) => `
+    <article class="card ${cart[p.id]?"inc":""} ${p.stok === 0 ? "soldout" : ""}" id="c_${esc(p.id)}" data-pid="${esc(p.id)}">
+      <div class="ph"><img src="${esc(img(p.gambar))}" alt="${esc(p.nama)}" ${i < 6 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async" data-id="${gid(p.gambar)}" onerror="fb(this)">${p.kategori?`<span class="tag">${esc(p.kategori)}</span>`:""}${pics(p).length > 1 ? `<span class="cn">${pics(p).length} foto</span>` : ""}${p.stok === 0 ? '<div class="sold"><span>Stok habis</span></div>' : ""}</div>
+      <div class="info"><div class="nm">${esc(p.nama)}</div>
+        ${p.deskripsi ? `<div class="ds">${esc(p.deskripsi)}</div>` : ""}
+        <div class="prw">${promo(p) ? `<s class="old">${rp(p.harga)}</s>` : ""}<span class="pr">${rp(hp(p))}${p.satuan ? ` <small>/ ${esc(p.satuan)}</small>` : ""}</span>${promo(p) ? `<span class="pill">Promo -${Math.round((1 - p.harga_diskon / p.harga) * 100)}%</span>` : ""}</div>
+        ${p.stok > 0 && p.stok <= 5 ? `<div class="stk">Stok Tinggal : ${p.stok}&nbsp;${esc(p.satuan)}</div>` : ""}
+        ${p.keterangan ? `<div class="ket">${esc(p.keterangan)}</div>` : ""}
+        <div class="act" id="a_${esc(p.id)}">${qh(p)}</div></div>
+    </article>`).join("") : '<div class="msg">Produk tidak ditemukan.</div>';
+}
+function setQty(id, n) {
+  n = Math.max(0, parseInt(n) || 0);
+  const p = products.find(x => String(x.id) === String(id)), a = $("a_" + id);
+  if (p && n > mxq(p)) { n = mxq(p); toast(n ? `Stok tinggal ${n}` : "Stok habis"); }   // tidak boleh melebihi stok
+  n ? cart[id] = n : delete cart[id];
+  if (a && p) { a.innerHTML = qh(p); $("c_" + id).classList.toggle("inc", !!n); }
+  bar(); if (curId === String(id)) dAct();
+}
+const total = () => products.reduce((s, p) => s + (cart[p.id] || 0) * hp(p), 0);
+const picked = () => products.filter(p => cart[p.id]);
+function bar() {
+  const n = Object.values(cart).reduce((a, b) => a + b, 0);
+  $("bar").style.display = n ? "flex" : "none";
+  $("bn").textContent = n; $("bt").textContent = rp(total());
+}
+function renderCart() {
+  const L = picked();
+  if (!L.length) { $("modal").style.display = "none"; return; }
+  $("items").innerHTML = L.map(p => `<div class="crow"><img src="${esc(img(p.gambar, 120))}" alt="" decoding="async" data-id="${gid(p.gambar)}" data-w="120" onerror="fb(this)">
+    <div class="t"><b>${esc(p.nama)}</b><span>${rp(hp(p))} × ${cart[p.id]} = ${rp(cart[p.id]*hp(p))}</span></div>
+    <div class="step"><button data-cm="${esc(p.id)}" aria-label="Kurangi">−</button><input data-ci="${esc(p.id)}" inputmode="numeric" value="${cart[p.id]}"><button data-cp="${esc(p.id)}" ${cart[p.id] >= mxq(p) ? "disabled" : ""} aria-label="Tambah">+</button></div></div>`).join("");
+  $("total").textContent = rp(total());
+}
+// ===== Detail produk (foto besar + deskripsi lengkap) =====
+let curId = null;
+const curP = () => products.find(x => String(x.id) === curId);
+function dAct() {
+  const p = curP(); if (!p) return; const n = cart[p.id] || 0, id = esc(p.id);
+  $("dact").innerHTML = p.stok === 0 ? '<button class="add big" disabled>Stok habis</button>' : n
+    ? `<div class="step big"><button data-dm="${id}" aria-label="Kurangi">−</button><input data-di="1" inputmode="numeric" value="${n}" aria-label="Jumlah"><button data-dp="${id}" ${n >= mxq(p) ? "disabled" : ""} aria-label="Tambah">+</button></div><div class="dsub">Subtotal ${rp(n * hp(p))}</div>`
+    : `<button class="add big" data-dp="${id}">+ Tambah ke keranjang</button>`;
+}
+function galHTML(p) {
+  const L = pics(p); if (!L.length) return '<div class="dimg" style="cursor:default"></div>';
+  return `<div class="gwrap"><div class="gal" id="gal">${L.map((u, k) => `<img class="dimg" src="${esc(img(u, 800))}" alt="${esc(p.nama)} ${k + 1}" ${k ? 'loading="lazy"' : ""} data-id="${gid(u)}" data-w="800" onerror="fb(this)">`).join("")}</div>`
+    + (L.length > 1 ? `<button class="gn l" data-g="-1" aria-label="Foto sebelumnya">‹</button><button class="gn r" data-g="1" aria-label="Foto berikutnya">›</button><div class="dots" id="dots">${L.map((_, k) => `<i class="${k ? "" : "on"}"></i>`).join("")}</div>` : "") + "</div>";
+}
+function openDetail(id) {
+  const p = products.find(x => String(x.id) === String(id)); if (!p) return; curId = String(p.id);
+  $("dbox").innerHTML = `<button class="dx" aria-label="Tutup">×</button>
+    ${galHTML(p)}
+    <div class="dbody">${p.kategori ? `<span class="dtag">${esc(p.kategori)}</span>` : ""}
+      <h2>${esc(p.nama)}</h2>
+      <div class="prw big">${promo(p) ? `<s class="old">${rp(p.harga)}</s>` : ""}<span class="pr">${rp(hp(p))}${p.satuan ? ` <small>/ ${esc(p.satuan)}</small>` : ""}</span>${promo(p) ? `<span class="pill">Promo -${Math.round((1 - p.harga_diskon / p.harga) * 100)}%</span>` : ""}</div>
+      ${p.keterangan ? `<div class="ket" style="margin-top:8px;font-size:.82rem">${esc(p.keterangan)}</div>` : ""}
+      ${p.stok != null ? `<div class="stk" style="margin-top:6px">${p.stok > 0 ? "Stok tersedia: " + p.stok : "Stok habis"}</div>` : ""}
+      ${p.deskripsi ? `<div class="ddesc">${esc(p.deskripsi)}</div>` : ""}
+      <div id="dact"></div></div>`;
+  const g = $("gal");
+  if (g && $("dots")) g.onscroll = () => { const i = Math.round(g.scrollLeft / g.clientWidth); [...$("dots").children].forEach((d, k) => d.classList.toggle("on", k === i)); };
+  dAct(); $("dm").style.display = "flex"; document.body.style.overflow = "hidden"; history.pushState({ d: 1 }, "");
+}
+function closeDetail(pop) {
+  $("dm").style.display = "none"; curId = null; document.body.style.overflow = "";
+  if (!pop && history.state && history.state.d) history.back();
+}
+$("dm").onclick = e => {
+  const t = e.target;
+  if (t === $("dm") || t.classList.contains("dx")) return closeDetail();
+  if (t.dataset.g) { const g = $("gal"); g.scrollBy({ left: +t.dataset.g * g.clientWidth, behavior: "smooth" }); return; }
+  if (t.classList.contains("dimg")) { t.classList.toggle("full"); return; }   // ketuk foto = lihat utuh
+  const b = t.closest("button"); if (!b) return;
+  const id = b.dataset.dp || b.dataset.dm; if (id) setQty(id, (cart[id] || 0) + (b.dataset.dp ? 1 : -1));
+};
+$("dm").onchange = e => { if (e.target.dataset.di) setQty(curId, e.target.value); };
+addEventListener("popstate", () => { if ($("dm").style.display === "flex") closeDetail(true); });
+addEventListener("keydown", e => { if (e.key === "Escape" && curId) closeDetail(); });
+
+$("grid").onclick = e => {
+  if (e.target.id === "rt") { $("grid").innerHTML = SKELETON; load(true); return; }
+  const b = e.target.closest("button");
+  if (!b) { if (e.target.closest("input")) return; const c = e.target.closest(".card"); if (c) openDetail(c.dataset.pid); return; }
+  const id = b.dataset.p || b.dataset.m; if (id) setQty(id, (cart[id] || 0) + (b.dataset.p ? 1 : -1));
+};
+$("grid").onchange = e => { if (e.target.dataset.i) setQty(e.target.dataset.i, e.target.value); };
+$("items").onclick = e => {
+  const b = e.target.closest("button"); if (!b) return;
+  const id = b.dataset.cp || b.dataset.cm; if (id) { setQty(id, (cart[id] || 0) + (b.dataset.cp ? 1 : -1)); renderCart(); }
+};
+$("items").onchange = e => { if (e.target.dataset.ci) { setQty(e.target.dataset.ci, e.target.value); renderCart(); } };
+$("chips").onclick = e => { const c = e.target.dataset.c; if (c) { cat = c; render(); } };
+$("q").oninput = render;
+$("open").onclick = () => { renderCart(); $("clnote").hidden = jamStatus()?.open !== false; $("modal").style.display = "flex"; };
+$("close").onclick = () => $("modal").style.display = "none";
+$("modal").onclick = e => { if (e.target === $("modal")) $("modal").style.display = "none"; };
+$("send").onclick = () => {
+  let t = `Halo ${store}, saya mau pesan:\n\n`;
+  picked().forEach((p, i) => t += `${i+1}. ${p.nama} × ${cart[p.id]}${p.satuan ? " " + p.satuan : ""} @ ${rp(hp(p))}${promo(p) ? " (promo)" : ""} = ${rp(cart[p.id]*hp(p))}\n${p.keterangan ? "   (" + p.keterangan + ")\n" : ""}`);
+  t += `\nTotal: ${rp(total())}`;
+  if ($("nm").value.trim()) t += `\nNama: ${$("nm").value.trim()}`;
+  if ($("note").value.trim()) t += `\nCatatan: ${$("note").value.trim()}`;
+  window.open(`https://wa.me/${wa}?text=${encodeURIComponent(t)}`, "_blank");
+};
+
+// ===== Jam operasional =====
+let jamCfg = {};
+const HARI = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+const mins = t => { const [a, b] = t.split(":"); return +a * 60 + +b; };
+function parseJam(s) { const o = {}; String(s || "").split(";").forEach(x => { const [d, v] = x.split("="); if (v !== undefined) o[+d] = v === "tutup" ? null : v.split("-"); }); return o; }
+function nowTz(z) {   // waktu di zona toko (bukan jam HP pembeli)
+  const p = new Intl.DateTimeFormat("en-US", { timeZone: z, weekday: "short", hour: "2-digit", minute: "2-digit", hour12: false }).formatToParts(new Date());
+  const g = t => p.find(x => x.type === t).value; let h = +g("hour"); if (h === 24) h = 0;
+  return { d: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(g("weekday")), m: h * 60 + +g("minute") };
+}
+function jamStatus() {
+  const c = jamCfg; if (!c.jam && c.tutup !== "ya") return null;
+  const sch = parseJam(c.jam), n = nowTz(c.zona || "Asia/Jakarta");
+  if (c.tutup === "ya") return { open: false, text: "Tutup sementara", sch, d: n.d };
+  let open = false, closeAt = "";
+  const T = sch[n.d];
+  if (T) { const a = mins(T[0]), b = mins(T[1]); if (a < b ? (n.m >= a && n.m < b) : (n.m >= a || n.m < b)) { open = true; closeAt = T[1]; } }
+  const Y = sch[(n.d + 6) % 7];
+  if (!open && Y) { const a = mins(Y[0]), b = mins(Y[1]); if (b < a && n.m < b) { open = true; closeAt = Y[1]; } }
+  if (open) return { open: true, text: "Buka sekarang · tutup pukul " + closeAt, sch, d: n.d };
+  for (let i = 0; i < 8; i++) {
+    const day = (n.d + i) % 7, t = sch[day]; if (!t) continue; if (i === 0 && mins(t[0]) <= n.m) continue;
+    return { open: false, text: "Tutup · buka " + (i === 0 ? "hari ini" : i === 1 ? "besok" : HARI[day]) + " pukul " + t[0], sch, d: n.d };
+  }
+  return { open: false, text: "Tutup", sch, d: n.d };
+}
+function renderJam() {
+  const st = jamStatus(), el = $("jam"); if (!st) { el.hidden = true; return; }
+  el.hidden = false; $("jams").textContent = st.text; $("jdot").className = "dot" + (st.open ? "" : " off");
+  $("jamd").innerHTML = [1, 2, 3, 4, 5, 6, 0].map(d => { const t = st.sch[d]; return `<div class="jr ${d === st.d ? "now" : ""}"><span>${HARI[d]}</span><span>${t ? t[0] + " – " + t[1] : "Tutup"}</span></div>`; }).join("");
+}
+$("jamb").onclick = () => { $("jamd").hidden = !$("jamd").hidden; $("jamb").setAttribute("aria-expanded", !$("jamd").hidden); };
+setInterval(renderJam, 60000);
+
+// ===== Ajakan pasang aplikasi (PWA) =====
+let dp = null;
+const standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+const snoozed = () => { try { return Date.now() < +localStorage.getItem("instX"); } catch { return false; } };
+function showInst(txt, btn) { if (standalone || snoozed()) return; $("itxt").textContent = txt; $("igo").textContent = btn; $("inst").style.display = "flex"; }
+addEventListener("beforeinstallprompt", e => { e.preventDefault(); dp = e; showInst("Pasang aplikasi ini di HP untuk pesan lebih cepat.", "Pasang"); });
+addEventListener("appinstalled", () => $("inst").style.display = "none");
+if (ios && !standalone) showInst("Untuk memasang: ketuk ikon Bagikan, lalu pilih “Tambah ke Layar Utama”.", "Mengerti");
+$("igo").onclick = async () => { if (dp) { dp.prompt(); await dp.userChoice; dp = null; } $("inst").style.display = "none"; };
+$("ix").onclick = () => { $("inst").style.display = "none"; try { localStorage.setItem("instX", Date.now() + 7 * 864e5); } catch {} };
+
+if (navigator.serviceWorker) addEventListener("load", () => navigator.serviceWorker.register("sw.js"));
+addEventListener("online", () => load(true));
+document.addEventListener("visibilitychange", () => { if (!document.hidden && Date.now() - lastLoad > 120000) load(true); });   // segarkan saat aplikasi dibuka kembali
+load();
+</script>
+</body>
+</html>
